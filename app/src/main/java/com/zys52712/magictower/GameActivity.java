@@ -83,7 +83,6 @@ public class GameActivity extends AppCompatActivity {
             { 6, 1 }, { 8, 1 } }; // lv15 to lv19
     static Random random = new Random();
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -170,7 +169,6 @@ public class GameActivity extends AppCompatActivity {
     }
 
     public void updateStats(){
-
         TextView hp = findViewById(R.id.health);
         TextView atkdef = findViewById(R.id.atkdef);
         TextView gexp = findViewById(R.id.gexp);
