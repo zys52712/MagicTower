@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 
 import java.util.Scanner;
@@ -18,7 +19,113 @@ public class ShopActivity extends AppCompatActivity {
         Intent intent = getIntent();
         char type = intent.getStringExtra(GameActivity.EXTRA_TYPE).charAt(0);
 
-        shop(type);
+        TextView offer1 = findViewById(R.id.offer1);
+        TextView offer2 = findViewById(R.id.offer2);
+        TextView offer3 = findViewById(R.id.offer3);
+        TextView offer4 = findViewById(R.id.offer4);
+
+        String[] offer = new String[5];
+
+        String selection = "7";
+        switch (type) {
+            case '$':
+                int cost = 25;
+                int hp = 800;
+                int atkdmg = 4;
+
+                if (GameActivity.currentLv == 11) {
+                    cost = 100;
+                    hp = 4000;
+                    atkdmg = 20;
+                }
+
+                System.out.format("Welcome to the shop, what would you like to get? (%d Gold each)\n", cost);
+                System.out.format("(1) %d health\n(2) %d attack\n(3) %d defense\n(4) exit shop\n", hp, atkdmg, atkdmg);
+                offer[1] = String.format("(1) %d health", hp);
+                offer[2] = String.format("(2) %d attack", atkdmg);
+                offer[3] = String.format("(3) %d defense", atkdmg);
+                offer[4] = String.format("(4) exit shop");
+
+                offer1.setText(offer[1]);
+                offer2.setText(offer[2]);
+                offer3.setText(offer[3]);
+                offer4.setText(offer[4]);
+
+                int finalCost = cost;
+                int finalHp = hp;
+                offer1.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View v) {
+                        if (GameActivity.pGold >= finalCost) {
+                            GameActivity.pGold -= finalCost;
+                            GameActivity.pHealth += finalHp;
+                            System.out.format("Health increased by %d\n", finalHp);
+                        } else {
+                            System.out.println("Sorry, you don't have enough gold");
+                        }
+                    }
+                });
+
+                int finalAtkdmg = atkdmg;
+                offer2.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View v) {
+                        if (GameActivity.pGold > finalCost) {
+                            GameActivity.pGold -= finalCost;
+                            GameActivity.pAtk += finalAtkdmg;
+                            System.out.format("Attack increased by %d\n", finalAtkdmg);
+                        } else {
+                            System.out.println("Sorry, you don't have enough gold");
+                        }
+                    }
+                });
+
+                offer3.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View v) {
+                        if (GameActivity.pGold > finalCost) {
+                            GameActivity.pGold -= finalCost;
+                            GameActivity.pDef += finalAtkdmg;
+                            System.out.format("Defense increased by %d\n", finalAtkdmg);
+                        } else {
+                            System.out.println("Sorry, you don't have enough gold");
+                        }
+                    }
+                });
+
+                offer4.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View v) {
+                        finish();
+                    }
+                });
+
+                //selection = 1;
+                if (selection.equals("1")) {
+                    if (GameActivity.pGold >= cost) {
+                        GameActivity.pGold -= cost;
+                        GameActivity.pHealth += hp;
+                        System.out.format("Health increased by %d\n", hp);
+                    } else {
+                        System.out.println("Sorry, you don't have enough gold");
+                    }
+                } else if (selection.equals("2")) {
+                    if (GameActivity.pGold > cost) {
+                        GameActivity.pGold -= cost;
+                        GameActivity.pAtk += atkdmg;
+                        System.out.format("Attack increased by %d\n", atkdmg);
+                    } else {
+                        System.out.println("Sorry, you don't have enough gold");
+                    }
+                } else if (selection.equals("3")) {
+                    if (GameActivity.pGold > cost) {
+                        GameActivity.pGold -= cost;
+                        GameActivity.pDef += atkdmg;
+                        System.out.format("Defense increased by %d\n", atkdmg);
+                    } else {
+                        System.out.println("Sorry, you don't have enough gold");
+                    }
+                } else {
+                    System.out.println("unknown input, please choose again");
+                }
+                break;
+        }
     }
 
 

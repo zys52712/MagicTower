@@ -83,16 +83,16 @@ public class FightActivity extends AppCompatActivity {
 
                     mobHealth -= negativeToZero(pAtk - mobDef);
                     pHealth -= negativeToZero(mobAtk - pDef);
+
                     negativeToZero(mobHealth);
                     negativeToZero(pHealth);
-                    System.out.println(currentTimeMillis());
 
-                    if (pHealth == 0) {
+                    if (pHealth <= 0) {
                         System.out.println("\nYou have been killed, thanks for playing");
                         System.exit(0);
                     }
 
-                    if (mobHealth == 0) {
+                    if (mobHealth <= 0) {
                         pHealth += negativeToZero(mobAtk - pDef);
                     }
 
@@ -104,7 +104,6 @@ public class FightActivity extends AppCompatActivity {
                     } else {
                         System.out.print("\n");
                     }
-                    current = currentTimeMillis();
                     pause(0.5);
                 }
 
@@ -115,7 +114,6 @@ public class FightActivity extends AppCompatActivity {
                 GameActivity.pDef = pDef;
                 GameActivity.pGold += mobGold;
                 GameActivity.pEXP += mobEXP;
-
                 finish();
             }
         }).start();

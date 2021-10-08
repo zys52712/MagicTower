@@ -128,11 +128,9 @@ public class GameActivity extends AppCompatActivity {
         left.setOnClickListener(this::moveOnClick);
         right.setOnClickListener(this::moveOnClick);
         invincible.setOnClickListener(this::invincibility);
-        //gameWindow.setText(levels[1][5].toString());
 
         levels[currentLv][pY][pX] = 'P';
         printField();
-
     }
 
     public void invincibility(View v){
@@ -147,10 +145,8 @@ public class GameActivity extends AppCompatActivity {
     }
 
     public void moveOnClick(View v) {
-        // do something when the button is clicked
-        // Yes we will handle click here but which button clicked??? We don't know
+        TextView lvDisplay = findViewById(R.id.lvView);
         TextView message = findViewById(R.id.msgBox);
-        // So we will make
         message.setText("");
 
         switch (v.getId() /*to get clicked view id**/) {
@@ -172,6 +168,7 @@ public class GameActivity extends AppCompatActivity {
         levels[currentLv][pY][pX] = 'P';
         printField();
         updateStats();
+        lvDisplay.setText("Currently on floor " + currentLv);
     }
 
     public void updateStats(){
@@ -335,6 +332,7 @@ public class GameActivity extends AppCompatActivity {
                 fight(levels[currentLv][pY][pX]);
                 message.setText(endText);
                 replaceAndReturn();
+                printField();
                 break;
             case 'T':
                 switch (currentLv) {
@@ -452,6 +450,7 @@ public class GameActivity extends AppCompatActivity {
                 pX = upDefaultPos[currentLv][0];
                 pY = upDefaultPos[currentLv][1];
                 currentLv++;
+
                 break;
             case '-':
                 levels[currentLv][oldPy][oldPx] = ' ';
