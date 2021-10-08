@@ -27,6 +27,7 @@ public class GameActivity extends AppCompatActivity {
     static String tempLine = new String();
     static int oldPx = 0;
     static int oldPy = 0;
+    static boolean firstRun = true;
     static int currentLv = 0;
     static int pX = 6;
     static int pY = 11;
@@ -88,29 +89,31 @@ public class GameActivity extends AppCompatActivity {
         ImageButton right = findViewById(R.id.button_right);
         Button invincible = findViewById(R.id.invincibility);
 
-
-        AssetManager manager = context.getAssets();
-        try {
-            levelTxt = manager.open("levels.txt");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        BufferedReader levelRead = new BufferedReader(new InputStreamReader(levelTxt));
-
-        // control how many levels to scan
-        for (int l = 0; l < levelCount + 1; l++) {
-            for (int i = 0; i < 13; i++) {
-                try {
-                    tempLine = levelRead.readLine();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                for (int j = 0; j < 13; j++) {
-                    levels[l][i][j] = tempLine.charAt(j);
-                }
-                levels[l][i][13] = '\n';
+        if(firstRun) {
+            AssetManager manager = context.getAssets();
+            try {
+                levelTxt = manager.open("levels.txt");
+            } catch (IOException e) {
+                e.printStackTrace();
             }
+
+            BufferedReader levelRead = new BufferedReader(new InputStreamReader(levelTxt));
+
+            // control how many levels to scan
+            for (int l = 0; l < levelCount + 1; l++) {
+                for (int i = 0; i < 13; i++) {
+                    try {
+                        tempLine = levelRead.readLine();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    for (int j = 0; j < 13; j++) {
+                        levels[l][i][j] = tempLine.charAt(j);
+                    }
+                    levels[l][i][13] = '\n';
+                }
+            }
+            firstRun = false;
         }
 
         TextView lvDisplay = findViewById(R.id.lvView);
@@ -128,6 +131,7 @@ public class GameActivity extends AppCompatActivity {
         left.setOnClickListener(this::moveOnClick);
         right.setOnClickListener(this::moveOnClick);
         invincible.setOnClickListener(this::invincibility);
+        //gameWindow.setText(levels[1][5].toString());
 
         levels[currentLv][pY][pX] = 'P';
         printField();

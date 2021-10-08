@@ -65,10 +65,8 @@ public class FightActivity extends AppCompatActivity {
                 TextView pStats = findViewById(R.id.pStats);
                 TextView mStats = findViewById(R.id.mStats);
                 setFinishOnTouchOutside(false);
-                System.out.format("%-10s%-10s%-20s\n", " ", "Player", mobName);
-                System.out.format("%-10s%-10d%-20d\n", "Health", pHealth, mobHealth);
-                System.out.format("%-10s%-10d%-20d\n", "Attack", pAtk, mobAtk);
-                System.out.format("%-10s%-10d%-20d\n\n", "Defense", pDef, mobDef);
+
+                pause(0.2);
 
                 if (mob == 'K') {
                     pHealth -= pHealth / 4;
@@ -96,14 +94,6 @@ public class FightActivity extends AppCompatActivity {
                         pHealth += negativeToZero(mobAtk - pDef);
                     }
 
-                    System.out.format("%-10s%-10d%-10d", "Health", pHealth, mobHealth);
-                    if (pAtk <= mobDef) {
-                        System.out.println("Player atk below enemy def, did not do damage to enemy");
-                    } else if (mobAtk <= pDef) {
-                        System.out.println("Enemy atk below player def, did not do damage to player");
-                    } else {
-                        System.out.print("\n");
-                    }
                     pause(0.5);
                 }
 
