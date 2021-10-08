@@ -4,10 +4,13 @@ import static java.lang.System.currentTimeMillis;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class FightActivity extends AppCompatActivity {
     String mobName = "";
@@ -25,13 +28,15 @@ public class FightActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fight);
-
+        Button fight = findViewById(R.id.fight);
         Intent intent = getIntent();
         char mob = intent.getStringExtra(GameActivity.EXTRA_MID).charAt(0);
         TextView pStats = findViewById(R.id.pStats);
         TextView mStats = findViewById(R.id.mStats);
         TextView title = findViewById(R.id.fightTitle);
         TextView mobID = findViewById(R.id.MobID);
+        fight.performClick();
+        fight.setEnabled(false);
 
         mobName = GameActivity.charToMobName(mob);
         mobHealth = GameActivity.mobStats(mob, 0);
@@ -59,7 +64,7 @@ public class FightActivity extends AppCompatActivity {
                 char mob = intent.getStringExtra(GameActivity.EXTRA_MID).charAt(0);
                 TextView pStats = findViewById(R.id.pStats);
                 TextView mStats = findViewById(R.id.mStats);
-
+                setFinishOnTouchOutside(false);
                 System.out.format("%-10s%-10s%-20s\n", " ", "Player", mobName);
                 System.out.format("%-10s%-10d%-20d\n", "Health", pHealth, mobHealth);
                 System.out.format("%-10s%-10d%-20d\n", "Attack", pAtk, mobAtk);
@@ -78,16 +83,17 @@ public class FightActivity extends AppCompatActivity {
 
                     mobHealth -= negativeToZero(pAtk - mobDef);
                     pHealth -= negativeToZero(mobAtk - pDef);
+                    negativeToZero(mobHealth);
                     negativeToZero(pHealth);
                     System.out.println(currentTimeMillis());
+
                     if (pHealth == 0) {
                         System.out.println("\nYou have been killed, thanks for playing");
                         System.exit(0);
                     }
 
-                    if (mobHealth <= 0) {
-                        mobHealth = 0;
-                        pHealth += (mobAtk - pDef);
+                    if (mobHealth == 0) {
+                        pHealth += negativeToZero(mobAtk - pDef);
                     }
 
                     System.out.format("%-10s%-10d%-10d", "Health", pHealth, mobHealth);
@@ -102,7 +108,8 @@ public class FightActivity extends AppCompatActivity {
                     pause(0.5);
                 }
 
-                System.out.format("\n\nYou defeated %s, %d gold and %d exp gained\n", mobName, mobGold, mobEXP);
+                String endText = String.format("You defeated %s, %d gold and %d exp gained", mobName, mobGold, mobEXP);
+
                 GameActivity.pHealth = pHealth;
                 GameActivity.pAtk = pAtk;
                 GameActivity.pDef = pDef;
@@ -112,6 +119,13 @@ public class FightActivity extends AppCompatActivity {
                 finish();
             }
         }).start();
+    }
+
+    @Override
+    public void onBackPressed() {
+        // super.onBackPressed();
+        Toast.makeText(FightActivity.this,"There is no back action",Toast.LENGTH_LONG).show();
+        return;
     }
 
     private void updateTextView(final String s1, final String s2) {
@@ -138,81 +152,3 @@ public class FightActivity extends AppCompatActivity {
         }
     }
 }
-
-/*
-
-Intent intent = getIntent();
-                char mob = intent.getStringExtra(GameActivity.EXTRA_MID).charAt(0);
-                TextView pStats = findViewById(R.id.pStats);
-                TextView mStats = findViewById(R.id.mStats);
-
-                int pHealth = GameActivity.pHealth;
-                int pAtk = GameActivity.pAtk;
-                int pDef = GameActivity.pDef;
-                long current = 0;
-                int temp = 0;
-
-                String mobName = GameActivity.charToMobName(mob);
-                int mobHealth = GameActivity.mobStats(mob, 0);
-                int mobAtk = GameActivity.mobStats(mob, 1);
-                int mobDef = GameActivity.mobStats(mob, 2);
-                int mobGold = GameActivity.mobStats(mob, 3);
-                int mobEXP = GameActivity.mobStats(mob, 4);
-
-                System.out.format("%-10s%-10s%-20s\n", " ", "Player", mobName);
-                System.out.format("%-10s%-10d%-20d\n", "Health", pHealth, mobHealth);
-                System.out.format("%-10s%-10d%-20d\n", "Attack", pAtk, mobAtk);
-                System.out.format("%-10s%-10d%-20d\n\n", "Defense", pDef, mobDef);
-
-                if (mob == 'K') {
-                    pHealth -= pHealth / 4;
-                }
-
-                pStats.setText(pHealth + "\n\n" + pAtk + "\n\n" + pDef + "\n\n" + negativeToZero(pAtk - mobDef));
-                pStats.invalidate();
-                pStats.requestLayout();
-                mStats.setText(mobHealth + "\n\n" + mobAtk + "\n\n" + mobDef + "\n\n" + negativeToZero(mobAtk - pDef));
-                mStats.invalidate();
-
-                current = currentTimeMillis();
-
-                while (mobHealth > 0) {
-                    pStats.setText(pHealth + "\n\n" + pAtk + "\n\n" + pDef + "\n\n" + negativeToZero(pAtk - mobDef));
-                    pStats.invalidate();
-                    mStats.setText(mobHealth + "\n\n" + mobAtk + "\n\n" + mobDef + "\n\n" + negativeToZero(mobAtk - pDef));
-                    mStats.invalidate();
-
-                    if (currentTimeMillis() - 500 > current) {
-                        mobHealth -= negativeToZero(pAtk - mobDef);
-                        pHealth -= negativeToZero(mobAtk - pDef);
-                        negativeToZero(pHealth);
-                        System.out.println(currentTimeMillis());
-                        if (pHealth == 0) {
-                            System.out.println("\nYou have been killed, thanks for playing");
-                            System.exit(0);
-                        }
-
-                        if (mobHealth <= 0) {
-                            mobHealth = 0;
-                            pHealth += (mobAtk - pDef);
-                        }
-
-                        System.out.format("%-10s%-10d%-10d", "Health", pHealth, mobHealth);
-                        if (pAtk <= mobDef) {
-                            System.out.println("Player atk below enemy def, did not do damage to enemy");
-                        } else if (mobAtk <= pDef) {
-                            System.out.println("Enemy atk below player def, did not do damage to player");
-                        } else {
-                            System.out.print("\n");
-                        }
-                        current = currentTimeMillis();
-                    }
-                }
-
-                System.out.format("\n\nYou defeated %s, %d gold and %d exp gained\n", mobName, mobGold, mobEXP);
-                GameActivity.pHealth = pHealth;
-                GameActivity.pAtk = pAtk;
-                GameActivity.pDef = pDef;
-                GameActivity.pGold += mobGold;
-                GameActivity.pEXP += mobEXP;
- */

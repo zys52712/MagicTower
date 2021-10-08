@@ -1,40 +1,27 @@
 package com.zys52712.magictower;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.res.ResourcesCompat;
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.AssetManager;
-import android.graphics.Typeface;
 import android.os.Bundle;
-import android.os.Handler;
-import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
 
 public class GameActivity extends AppCompatActivity {
 
-    public static final String EXTRA_PHP = "";
-    public static final String EXTRA_PATK = "";
-    public static final String EXTRA_PDEF = "";
     public static final String EXTRA_MID = "";
-    public static final String EXTRA_MHP = "";
-    public static final String EXTRA_MATK = "";
-    public static final String EXTRA_MDEF = "";
-
+    public static String endText;
     static char[][][] levels = new char[22][13][14];
     static String tempLine = new String();
     static int oldPx = 0;
@@ -98,6 +85,7 @@ public class GameActivity extends AppCompatActivity {
         ImageButton down = findViewById(R.id.button_down);
         ImageButton left = findViewById(R.id.button_left);
         ImageButton right = findViewById(R.id.button_right);
+        Button invincible = findViewById(R.id.invincibility);
 
         AssetManager manager = context.getAssets();
         try {
@@ -135,6 +123,7 @@ public class GameActivity extends AppCompatActivity {
         down.setOnClickListener(this::moveOnClick);
         left.setOnClickListener(this::moveOnClick);
         right.setOnClickListener(this::moveOnClick);
+        invincible.setOnClickListener(this::invincibility);
         //gameWindow.setText(levels[1][5].toString());
 
         levels[currentLv][pY][pX] = 'P';
@@ -142,11 +131,24 @@ public class GameActivity extends AppCompatActivity {
 
     }
 
+    public void invincibility(View v){
+        pHealth += 50000;
+        pAtk += 3000;
+        pDef += 5000;
+        pGold += 1000;
+        pEXP += 1000;
+
+        printField();
+        updateStats();
+    }
+
     public void moveOnClick(View v) {
         // do something when the button is clicked
         // Yes we will handle click here but which button clicked??? We don't know
-
+        TextView message = findViewById(R.id.msgBox);
         // So we will make
+        message.setText("");
+
         switch (v.getId() /*to get clicked view id**/) {
             case R.id.button_up:
                 movePC('w');
@@ -189,68 +191,6 @@ public class GameActivity extends AppCompatActivity {
         String mobS = String.valueOf(mob);
         intent.putExtra(EXTRA_MID, mobS);
         startActivity(intent);
-
-        /*
-        String mobName = charToMobName(mob);
-        int mobHealth = mobStats(mob, 0);
-        int mobAtk = mobStats(mob, 1);
-        int mobDef = mobStats(mob, 2);
-        int mobGold = mobStats(mob, 3);
-        int mobEXP = mobStats(mob, 4);
-
-
-
-        EXTRA_MID = "";
-        intent.putExtra(EXTRA_PHP, pHealth);
-        intent.putExtra(EXTRA_PATK = "";
-        intent.putExtra(EXTRA_PDEF = "";
-        intent.putExtra(EXTRA_MHP = "";
-        intent.putExtra(EXTRA_MATK = "";
-        intent.putExtra(EXTRA_MDEF = "";
-
-
-        System.out.format("%-10s%-10s%-20s\n", " ", "Player", mobName);
-        System.out.format("%-10s%-10d%-20d\n", "Health", pHealth, mobHealth);
-        System.out.format("%-10s%-10d%-20d\n", "Attack", pAtk, mobAtk);
-        System.out.format("%-10s%-10d%-20d\n\n", "Defense", pDef, mobDef);
-        if (mob == 'K') {
-            pHealth -= pHealth / 4;
-        }
-
-        while (mobHealth > 0) {
-            mobHealth -= negativeToZero(pAtk - mobDef);
-
-            pHealth -= negativeToZero(mobAtk - pDef);
-            negativeToZero(pHealth);
-
-            if (pHealth == 0) {
-                System.out.println("\nYou have been killed, thanks for playing");
-                System.exit(0);
-            }
-
-            if (mobHealth <= 0) {
-                mobHealth = 0;
-                pHealth += (mobAtk - pDef);
-            }
-
-            updateStats();
-
-            System.out.format("%-10s%-10d%-10d", "Health", pHealth, mobHealth);
-            if (pAtk <= mobDef) {
-                System.out.println("Player atk below enemy def, did not do damage to enemy");
-            } else if (mobAtk <= pDef) {
-                System.out.println("Enemy atk below player def, did not do damage to player");
-            } else {
-                System.out.print("\n");
-            }
-
-            pause(0.5);
-        }
-
-        pGold += mobGold;
-        pEXP += mobEXP;
-        System.out.format("\n\nYou defeated %s, %d gold and %d exp gained\n", mobName, mobGold, mobEXP);
-        */
     }
 
     public void game() {
@@ -318,6 +258,8 @@ public class GameActivity extends AppCompatActivity {
     }
 
     public void movePC(char direction) {
+        TextView message = findViewById(R.id.msgBox);
+
         oldPx = pX;
         oldPy = pY;
 
@@ -373,8 +315,15 @@ public class GameActivity extends AppCompatActivity {
             case 'a':
             case 'A':
             case 'z':
-                System.out.format("Fight initiated with *%s*\n\n", charToMobName(levels[currentLv][pY][pX]));
+                char mob = levels[currentLv][pY][pX];
+                String mobName = GameActivity.charToMobName(mob);
+                int mobGold = GameActivity.mobStats(mob, 3);
+                int mobEXP = GameActivity.mobStats(mob, 4);
+
+                System.out.format("Fight initiated with *%s*\n\n", mobName);
+                String endText = String.format("You defeated %s, %d gold and %d exp gained", mobName, mobGold, mobEXP);
                 fight(levels[currentLv][pY][pX]);
+                message.setText(endText);
                 replaceAndReturn();
                 break;
             case 'T':
