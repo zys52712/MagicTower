@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Magic Tower</string>
+    <string-array name="Levels">
+        <item>Mercury</item>
+        <item>Venus</item>
+        <item>Earth</item>
+        <item>Mars</item>
+    </string-array>
+
+</resources>
