@@ -638,63 +638,8 @@ public class GameActivity extends AppCompatActivity {
                     break;
             }
             line += temp;
-
             gameWindow.append(line + "\n");
         }
-
-        /*
-        for (int i = 0; i < 13; i++) {
-            for (int j = 0; j < 13; j++) {
-                System.out.print(letterToBoard(levels[currentLv][i][j]));
-            }
-            switch (i) {
-                case 0:
-                    System.out.println("╦═══════════════╗");
-                    break;
-                case 1:
-                    System.out.println("║ Player Stats  ║");
-                    break;
-                case 2:
-                    System.out.format("║ Level   %5d ║\n", pLv);
-                    break;
-                case 3:
-                    System.out.format("║ Health  %5d ║\n", pHealth);
-                    break;
-                case 4:
-                    System.out.format("║ Attack   %4d ║\n", pAtk);
-                    break;
-                case 5:
-                    System.out.format("║ Defense  %4d ║\n", pDef);
-                    break;
-                case 6:
-                    System.out.format("║ Gold    %5d ║\n", pGold);
-                    break;
-                case 7:
-                    System.out.format("║ EXP     %5d ║\n", pEXP);
-                    break;
-                case 8:
-                    System.out.println("║ Keys          ║");
-                    break;
-                case 9:
-                    System.out.format("║ Yellow ░  %3d ║\n", pKeys[0]);
-                    break;
-                case 10:
-                    System.out.format("║ Blue   ▒  %3d ║\n", pKeys[1]);
-                    break;
-                case 11:
-                    System.out.format("║ Red    ▓  %3d ║\n", pKeys[2]);
-                    break;
-                case 12:
-                    System.out.println("╩═══════════════╝");
-                    break;
-                default:
-                    System.out.format("\n");
-                    break;
-            }
-        }
-        System.out.format("         Level %d\n", currentLv);
-
-         */
     }
 
     public static String letterToBoard(char board) {
