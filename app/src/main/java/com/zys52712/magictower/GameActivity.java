@@ -21,6 +21,7 @@ import java.util.Scanner;
 public class GameActivity extends AppCompatActivity {
 
     public static final String EXTRA_MID = "";
+    public static final String EXTRA_TYPE = "";
     public static String endText;
     static char[][][] levels = new char[22][13][14];
     static String tempLine = new String();
@@ -87,6 +88,7 @@ public class GameActivity extends AppCompatActivity {
         ImageButton right = findViewById(R.id.button_right);
         Button invincible = findViewById(R.id.invincibility);
 
+
         AssetManager manager = context.getAssets();
         try {
             levelTxt = manager.open("levels.txt");
@@ -111,6 +113,7 @@ public class GameActivity extends AppCompatActivity {
             }
         }
 
+        TextView lvDisplay = findViewById(R.id.lvView);
         TextView hp = findViewById(R.id.health);
         TextView atkdef = findViewById(R.id.atkdef);
         TextView gexp = findViewById(R.id.gexp);
@@ -118,6 +121,7 @@ public class GameActivity extends AppCompatActivity {
         hp.setText(Integer.toString(pHealth));
         atkdef.setText(pAtk + " / " + pDef);
         gexp.setText(pGold + " / " + pEXP);
+        lvDisplay.setText("Currently on floor " + currentLv);
 
         up.setOnClickListener(this::moveOnClick);
         down.setOnClickListener(this::moveOnClick);
@@ -132,11 +136,11 @@ public class GameActivity extends AppCompatActivity {
     }
 
     public void invincibility(View v){
-        pHealth += 50000;
-        pAtk += 3000;
-        pDef += 5000;
-        pGold += 1000;
-        pEXP += 1000;
+        pHealth = 50000;
+        pAtk = 3000;
+        pDef = 5000;
+        pGold = 1000;
+        pEXP = 1000;
 
         printField();
         updateStats();
@@ -185,11 +189,17 @@ public class GameActivity extends AppCompatActivity {
         });
     }
 
-
     public void fight(char mob) {
         Intent intent = new Intent(this, FightActivity.class);
         String mobS = String.valueOf(mob);
         intent.putExtra(EXTRA_MID, mobS);
+        startActivity(intent);
+    }
+
+    public void shop(char type) {
+        Intent intent = new Intent(this, ShopActivity.class);
+        String typeS = String.valueOf(type);
+        intent.putExtra(EXTRA_TYPE, typeS);
         startActivity(intent);
     }
 
@@ -368,42 +378,42 @@ public class GameActivity extends AppCompatActivity {
                 pY = oldPy;
                 break;
             case '1':
-                System.out.print("You have gained a bottle, health increased by 200!");
+                message.setText("You have gained a bottle, health increased by 200!");
                 pHealth += 200;
                 replaceAndReturn();
                 break;
             case '2':
-                System.out.print("You have gained a bottle, health increased by 500!");
+                message.setText("You have gained a bottle, health increased by 500!");
                 pHealth += 500;
                 replaceAndReturn();
                 break;
             case '3':
-                System.out.print("You have gained blue gem, defense increased by 3!");
+                message.setText("You have gained blue gem, defense increased by 3!");
                 pDef += 3;
                 replaceAndReturn();
                 break;
             case '4':
-                System.out.print("You have gained red gem, attack increased by 3!");
+                message.setText("You have gained red gem, attack increased by 3!");
                 pAtk += 3;
                 replaceAndReturn();
                 break;
             case '5':
-                System.out.print("You gained a yellow key");
+                message.setText("You gained a yellow key");
                 pKeys[0]++;
                 replaceAndReturn();
                 break;
             case '6':
-                System.out.print("You gained a blue key");
+                message.setText("You gained a blue key");
                 pKeys[1]++;
                 replaceAndReturn();
                 break;
             case '7':
-                System.out.print("You gained a red key");
+                message.setText("You gained a red key");
                 pKeys[2]++;
                 replaceAndReturn();
                 break;
             case 'þ':
-                System.out.print("You gained a key of each type!");
+                message.setText("You gained a key of each type!");
                 pKeys[0]++;
                 pKeys[1]++;
                 pKeys[2]++;
@@ -413,11 +423,11 @@ public class GameActivity extends AppCompatActivity {
                 switch (currentLv) {
                     case 2:
                     case 3:
-                        System.out.print("You gained a sword, attack increased by 10!");
+                        message.setText("You gained a sword, attack increased by 10!");
                         pAtk += 10;
                         break;
                     case 9:
-                        System.out.print("You gained a greatsword, attack increased by 70!");
+                        message.setText("You gained a greatsword, attack increased by 70!");
                         pAtk += 70;
                         break;
                 }
@@ -427,11 +437,11 @@ public class GameActivity extends AppCompatActivity {
                 switch (currentLv) {
                     case 2:
                     case 5:
-                        System.out.print("You gained a shield, defense increased by 10!");
+                        message.setText("You gained a shield, defense increased by 10!");
                         pDef += 10;
                         break;
                     case 11:
-                        System.out.print("You gained a shield, defense increased by 70!");
+                        message.setText("You gained a shield, defense increased by 70!");
                         pDef += 70;
                         break;
                 }
@@ -458,33 +468,33 @@ public class GameActivity extends AppCompatActivity {
                 break;
             case '░':
                 if (pKeys[0] > 0) {
-                    System.out.format("You used yellow key on door");
+                    message.setText("You used yellow key on door");
                     pKeys[0]--;
                     levels[currentLv][pY][pX] = ' ';
                 } else {
-                    System.out.format("You don't have enough yellow keys left");
+                    message.setText("You don't have any yellow keys left");
                 }
                 pX = oldPx;
                 pY = oldPy;
                 break;
             case '▒':
                 if (pKeys[1] > 0) {
-                    System.out.format("You used blue key on door");
+                    message.setText("You used blue key on door");
                     pKeys[1]--;
                     levels[currentLv][pY][pX] = ' ';
                 } else {
-                    System.out.format("You don't have enough blue keys left");
+                    message.setText("You don't have any blue keys left");
                 }
                 pX = oldPx;
                 pY = oldPy;
                 break;
             case '▓':
                 if (pKeys[2] > 0) {
-                    System.out.format("You used red key on door");
+                    message.setText("You used red key on door");
                     pKeys[2]--;
                     levels[currentLv][pY][pX] = ' ';
                 } else {
-                    System.out.format("You don't have enough red keys left");
+                    message.setText("You don't have any red keys left");
                 }
                 pX = oldPx;
                 pY = oldPy;
@@ -498,137 +508,6 @@ public class GameActivity extends AppCompatActivity {
         levels[currentLv][pY][pX] = ' ';
         pX = oldPx;
         pY = oldPy;
-    }
-
-    public static void shop(char type) {
-        Scanner sc = new Scanner(System.in);
-        String selection = new String();
-        switch (type) {
-            case '$':
-                int cost = 25;
-                int hp = 800;
-                int atkdmg = 4;
-
-                if (currentLv == 11) {
-                    cost = 100;
-                    hp = 4000;
-                    atkdmg = 20;
-                }
-                System.out.format("Welcome to the shop, what would you like to get? (%d Gold each)\n", cost);
-                System.out.format("(1) %d health\n(2) %d attack\n(3) %d defense\n(4) exit shop\n", hp, atkdmg, atkdmg);
-                selection = sc.next();
-                if (selection.equals("1")) {
-                    if (pGold >= cost) {
-                        pGold -= cost;
-                        pHealth += hp;
-                        System.out.format("Health increased by %d\n", hp);
-                    } else {
-                        System.out.println("Sorry, you don't have enough gold");
-                    }
-                } else if (selection.equals("2")) {
-                    if (pGold > cost) {
-                        pGold -= cost;
-                        pAtk += atkdmg;
-                        System.out.format("Attack increased by %d\n", atkdmg);
-                    } else {
-                        System.out.println("Sorry, you don't have enough gold");
-                    }
-                } else if (selection.equals("3")) {
-                    if (pGold > cost) {
-                        pGold -= cost;
-                        pDef += atkdmg;
-                        System.out.format("Defense increased by %d\n", atkdmg);
-                    } else {
-                        System.out.println("Sorry, you don't have enough gold");
-                    }
-                } else {
-                    System.out.println("unknown input, please choose again");
-                }
-                break;
-            case '£':
-                int lvCost = 100;
-                int lv = 1;
-                int cost2 = 30;
-                int atkdmg2 = 5;
-
-                if (currentLv == 13) {
-                    lvCost = 270;
-                    lv = 3;
-                    cost2 = 95;
-                    atkdmg2 = 20;
-                }
-
-                System.out.println("Welcome to the EXP shop, what would you like to get?");
-                System.out.format(
-                        "(1) level up (x%d) - %dEXP\n(2) %d attack - %dEXP\n(3) %d defense - %dEXP\n(4) exit shop\n", lv,
-                        lvCost, cost2, atkdmg2, cost2, atkdmg2);
-                selection = sc.next();
-                if (selection.equals("1")) {
-                    if (pEXP >= lvCost) {
-                        pEXP -= lvCost;
-                        pHealth += 1000 * lv;
-                        pAtk += 7 * lv;
-                        pDef += 7 * lv;
-                        pLv++;
-                        System.out.println("Leveled up! Stats increased!");
-                    } else {
-                        System.out.println("Sorry, you don't have enough EXP");
-                    }
-                } else if (selection.equals("2")) {
-                    if (pEXP >= cost2) {
-                        pEXP -= cost2;
-                        pAtk += atkdmg2;
-                        System.out.format("Attack increased by %d\n", atkdmg2);
-                    } else {
-                        System.out.println("Sorry, you don't have enough EXP");
-                    }
-                } else if (selection.equals("3")) {
-                    if (pEXP >= cost2) {
-                        pEXP -= cost2;
-                        pDef += atkdmg2;
-                        System.out.format("Defense increased by %d\n", atkdmg2);
-                    } else {
-                        System.out.println("Sorry, you don't have enough EXP");
-                    }
-                } else {
-                    System.out.println("unknown input, please choose again");
-                }
-                break;
-            case '¥':
-                System.out.println("Welcome to the key shop, what would you like to get?");
-                System.out.format(
-                        "(1) Yellow Key - 10 Gold\n(2) Blue Key - 50 Gold\n(3) Red Key - 100 Gold\n(4) exit shop\n");
-                selection = sc.next();
-                if (selection.equals("1")) {
-                    if (pGold > 9) {
-                        pGold -= 10;
-                        pKeys[0]++;
-                        System.out.println("You bought a yellow key");
-                    } else {
-                        System.out.println("Sorry, you don't have enough gold");
-                    }
-                } else if (selection.equals("2")) {
-                    if (pGold > 49) {
-                        pGold -= 50;
-                        pKeys[1]++;
-                        System.out.println("You bought a blue key");
-                    } else {
-                        System.out.println("Sorry, you don't have enough gold");
-                    }
-                } else if (selection.equals("3")) {
-                    if (pGold > 99) {
-                        pGold -= 100;
-                        pKeys[2]++;
-                        System.out.println("You bought a red key");
-                    } else {
-                        System.out.println("Sorry, you don't have enough gold");
-                    }
-                } else {
-                    System.out.println("unknown input, please choose again");
-                }
-                break;
-        }
-
     }
 
     public static void useTeleporter(int level) {
@@ -709,9 +588,57 @@ public class GameActivity extends AppCompatActivity {
         gameWindow.setText("");
         for (int i = 0; i < 13; i++) {
             String line = "";
+            String temp = "";
             for (int j = 0; j < 13; j++) {
                 line += letterToBoard(levels[currentLv][i][j]);
             }
+
+            switch (i) {
+                case 0:
+                    temp = String.format("╦══════════╗");
+                    break;
+                case 1:
+                    temp = String.format("║ Stats    ║");
+                    break;
+                case 2:
+                    temp = String.format("║ LV  %4d ║", pLv);
+                    break;
+                case 3:
+                    temp = String.format("║ HP %5d ║", pHealth);
+                    break;
+                case 4:
+                    temp = String.format("║ ATK %4d ║", pAtk);
+                    break;
+                case 5:
+                    temp = String.format("║ DEF %4d ║", pDef);
+                    break;
+                case 6:
+                    temp = String.format("║ GOLD%4d ║", pGold);
+                    break;
+                case 7:
+                    temp = String.format("║ EXP %4d ║", pEXP);
+                    break;
+                case 8:
+                    temp = String.format("║ Keys     ║");
+                    break;
+                case 9:
+                    temp = String.format("║ ░    %3d ║", pKeys[0]);
+                    break;
+                case 10:
+                    temp = String.format("║ ▒    %3d ║", pKeys[1]);
+                    break;
+                case 11:
+                    temp = String.format("║ ▓    %3d ║", pKeys[2]);
+                    break;
+                case 12:
+                    temp = String.format("╩══════════╝");
+                    break;
+                default:
+                    temp = String.format("");
+                    break;
+            }
+            line += temp;
+
             gameWindow.append(line + "\n");
         }
 

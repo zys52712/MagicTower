@@ -22,11 +22,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="88dp"
-        android:layout_marginTop="44dp"
+        android:layout_marginTop="16dp"
         android:text="health"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         app:layout_constraintStart_toStartOf="@+id/guideline2"
-        app:layout_constraintTop_toBottomOf="@+id/gameWindow" />
+        app:layout_constraintTop_toBottomOf="@+id/msgBox" />
 
     <TextView
         android:id="@+id/gexp"
@@ -63,16 +63,17 @@
 
     <TextView
         android:id="@+id/gameWindow"
-        android:layout_width="315dp"
-        android:layout_height="340dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
         android:fontFamily="@font/scpro"
         android:scrollbars="none"
-        android:textAlignment="center"
+        android:textAlignment="viewStart"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textSize="20sp"
+        android:textSize="16sp"
         android:typeface="monospace"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -137,14 +138,13 @@
         android:id="@+id/msgBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:text="TextView"
+        android:layout_marginTop="8dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/gameWindow" />
+        app:layout_constraintTop_toBottomOf="@+id/lvView" />
 
     <Button
         android:id="@+id/invincibility"
@@ -155,5 +155,15 @@
         android:text="无敌"
         app:layout_constraintBottom_toTopOf="@+id/button_right"
         app:layout_constraintStart_toEndOf="@+id/button_up" />
+
+    <TextView
+        android:id="@+id/lvView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:text="TextView"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+        app:layout_constraintStart_toStartOf="@+id/guideline2"
+        app:layout_constraintTop_toBottomOf="@+id/gameWindow" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

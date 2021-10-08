@@ -10,10 +10,19 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MagicTower">
         <activity
+            android:name=".ShopActivity"
+            android:exported="true"
+            android:label="Shop"
+            android:theme="@style/Theme.AppCompat.DayNight.Dialog.Alert">
+        <meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value=".GameActivity" />
+        </activity>
+        <activity
             android:name=".FightActivity"
             android:exported="true"
             android:label="Mob encounter"
-            android:theme="@style/Theme.AppCompat.Light.Dialog.Alert">
+            android:theme="@style/Theme.AppCompat.DayNight.Dialog.Alert">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".GameActivity" />

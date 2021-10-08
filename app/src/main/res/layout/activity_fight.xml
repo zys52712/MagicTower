@@ -10,46 +10,44 @@
         android:id="@+id/names4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="36dp"
+        android:layout_marginEnd="20dp"
         android:fontFamily="monospace"
         android:text="HP\n\nATK\n\nDEF\n\nDMG"
         android:textAlignment="textEnd"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textSize="25sp"
         app:layout_constraintBaseline_toBaselineOf="@+id/pStats"
-        app:layout_constraintEnd_toStartOf="@+id/pStats" />
+        app:layout_constraintEnd_toStartOf="@+id/Names" />
 
     <TextView
         android:id="@+id/pStats"
-        android:layout_width="75dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="28dp"
         android:fontFamily="monospace"
         android:text="HP\n\nATK\n\nDEF\n\nDMG"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textSize="25sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/Names"
         app:layout_constraintTop_toBottomOf="@+id/Names" />
 
     <TextView
         android:id="@+id/mStats"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="28dp"
+        android:layout_marginStart="20dp"
         android:fontFamily="monospace"
         android:text="HP\n\nATK\n\nDEF\n\nDMG"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textSize="25sp"
         app:layout_constraintBaseline_toBaselineOf="@+id/pStats"
-        app:layout_constraintStart_toEndOf="@+id/pStats" />
+        app:layout_constraintStart_toEndOf="@+id/Names" />
 
     <TextView
         android:id="@+id/names2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="36dp"
+        android:layout_marginEnd="20dp"
         android:fontFamily="monospace"
         android:text="Stats"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
@@ -67,6 +65,7 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.522"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/fightTitle" />
 
@@ -74,7 +73,7 @@
         android:id="@+id/MobID"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="28dp"
+        android:layout_marginStart="20dp"
         android:fontFamily="monospace"
         android:text="Mob"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
@@ -91,7 +90,7 @@
         android:text="Fight with "
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textSize="25sp"
+        android:textSize="22sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
