@@ -13,7 +13,7 @@
             android:name=".FightActivity"
             android:exported="true"
             android:label="Mob encounter"
-            android:theme="@style/Theme.MaterialComponents.Dialog">
+            android:theme="@style/Theme.AppCompat.Light.Dialog.Alert">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".GameActivity" />
