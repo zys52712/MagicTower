@@ -190,6 +190,13 @@ public class GameActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        printField();
+        updateStats();
+    }
+
     public void fight(char mob) {
         Intent intent = new Intent(this, FightActivity.class);
         String mobS = String.valueOf(mob);
