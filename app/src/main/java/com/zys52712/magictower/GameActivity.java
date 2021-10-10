@@ -15,10 +15,12 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.lang.ref.WeakReference;
 import java.util.Random;
 import java.util.Scanner;
 
 public class GameActivity extends AppCompatActivity {
+    public static WeakReference<TextView> viewWeakReference;
 
     public static final String EXTRA_MID = "";
     public static final String EXTRA_TYPE = "";
@@ -71,6 +73,7 @@ public class GameActivity extends AppCompatActivity {
             { 7, 4 }, { 1, 10 }, { 10, 11 }, { 2, 11 }, { 5, 11 }, // lv10 to lv14
             { 6, 1 }, { 8, 1 } }; // lv15 to lv19
     static Random random = new Random();
+    private static TextView message;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,6 +91,7 @@ public class GameActivity extends AppCompatActivity {
         ImageButton left = findViewById(R.id.button_left);
         ImageButton right = findViewById(R.id.button_right);
         Button invincible = findViewById(R.id.invincibility);
+        viewWeakReference = new WeakReference<>(findViewById(R.id.msgBox));
 
         if(firstRun) {
             AssetManager manager = context.getAssets();
@@ -116,16 +120,6 @@ public class GameActivity extends AppCompatActivity {
             firstRun = false;
         }
 
-        TextView lvDisplay = findViewById(R.id.lvView);
-        TextView hp = findViewById(R.id.health);
-        TextView atkdef = findViewById(R.id.atkdef);
-        TextView gexp = findViewById(R.id.gexp);
-
-        hp.setText(Integer.toString(pHealth));
-        atkdef.setText(pAtk + " / " + pDef);
-        gexp.setText(pGold + " / " + pEXP);
-        lvDisplay.setText("Currently on floor " + currentLv);
-
         up.setOnClickListener(this::moveOnClick);
         down.setOnClickListener(this::moveOnClick);
         left.setOnClickListener(this::moveOnClick);
@@ -145,11 +139,9 @@ public class GameActivity extends AppCompatActivity {
         pEXP = 1000;
 
         printField();
-        updateStats();
     }
 
     public void moveOnClick(View v) {
-        TextView lvDisplay = findViewById(R.id.lvView);
         TextView message = findViewById(R.id.msgBox);
         message.setText("");
 
@@ -171,30 +163,12 @@ public class GameActivity extends AppCompatActivity {
         }
         levels[currentLv][pY][pX] = 'P';
         printField();
-        updateStats();
-        lvDisplay.setText("Currently on floor " + currentLv);
-    }
-
-    public void updateStats(){
-        TextView hp = findViewById(R.id.health);
-        TextView atkdef = findViewById(R.id.atkdef);
-        TextView gexp = findViewById(R.id.gexp);
-
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                hp.setText(Integer.toString(pHealth));
-                atkdef.setText(pAtk + " / " + pDef);
-                gexp.setText(pGold + " / " + pEXP);
-            }
-        });
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         printField();
-        updateStats();
     }
 
     public void fight(char mob) {
@@ -213,6 +187,16 @@ public class GameActivity extends AppCompatActivity {
 
     public void totem(View view) {
         Intent intent = new Intent(this, TotemActivity.class);
+        startActivity(intent);
+    }
+
+    public void teleport(View view) {
+        Intent intent = new Intent(this, TeleportActivity.class);
+        startActivity(intent);
+    }
+
+    public void debug(View view) {
+        Intent intent = new Intent(this, DebugActivity.class);
         startActivity(intent);
     }
 
@@ -343,9 +327,9 @@ public class GameActivity extends AppCompatActivity {
                 int mobGold = GameActivity.mobStats(mob, 3);
                 int mobEXP = GameActivity.mobStats(mob, 4);
 
-                System.out.format("Fight initiated with *%s*\n\n", mobName);
-                String endText = String.format("You defeated %s, %d gold and %d exp gained", mobName, mobGold, mobEXP);
                 fight(levels[currentLv][pY][pX]);
+
+                String endText = String.format("You defeated *%s*\n %d gold and %d exp gained", mobName, mobGold, mobEXP);
                 message.setText(endText);
                 replaceAndReturn();
                 printField();
@@ -527,7 +511,7 @@ public class GameActivity extends AppCompatActivity {
 
     public static void useTeleporter(int level) {
         if (level < 0 || level > levelCount) {
-            System.out.println("level out of bounds, please try again");
+            viewWeakReference.get().setText("Input out of bounds, please try again");
         } else {
             levels[currentLv][pY][pX] = ' ';
             currentLv = level;
@@ -538,6 +522,9 @@ public class GameActivity extends AppCompatActivity {
                 pX = upDefaultPos[currentLv - 1][0];
                 pY = upDefaultPos[currentLv - 1][1];
             }
+            levels[currentLv][pY][pX] = 'P';
+            String temp = String.format("Teleported to floor %d", currentLv);
+            viewWeakReference.get().setText(temp);
         }
     }
 
@@ -601,7 +588,10 @@ public class GameActivity extends AppCompatActivity {
 
     public void printField() {
         TextView gameWindow = findViewById(R.id.gameWindow);
+        TextView test = findViewById(R.id.testView);
+
         gameWindow.setText("");
+        test.setText("");
         for (int i = 0; i < 13; i++) {
             String line = "";
             String temp = "";
@@ -609,12 +599,42 @@ public class GameActivity extends AppCompatActivity {
                 line += letterToBoard(levels[currentLv][i][j]);
             }
 
+            /*
+            switch (i) {
+                case 0:
+                    temp = String.format("╔══════════╦══════════╗");
+                    break;
+                case 1:
+                    temp = String.format("║ Stats    ║ Floor %2d ║", currentLv);
+                    break;
+                case 2:
+                    temp = String.format("║ LV  %4d ║ HP %5d ║", pLv, pHealth);
+                    break;
+                case 3:
+                    temp = String.format("║ ATK %4d ║ DEF %4d ║", pAtk, pDef);
+                    break;
+                case 4:
+                    temp = String.format("║ GOLD%4d ║ EXP %4d ║", pGold, pEXP);
+                    break;
+                case 5:
+                    temp = String.format("║ Keys     ║ ░    %3d ║", pKeys[0]);
+                    break;
+                case 6:
+                    temp = String.format("║ ▒    %3d ║ ▓    %3d ║", pKeys[1], pKeys[2]);
+                    break;
+                case 7:
+                    temp = String.format("╚══════════╩══════════╝");
+                    break;
+            }
+            test.append(temp + "\n");
+             */
+
             switch (i) {
                 case 0:
                     temp = String.format("╦══════════╗");
                     break;
                 case 1:
-                    temp = String.format("║ Stats    ║");
+                    temp = String.format("║ Floor %2d ║", currentLv);
                     break;
                 case 2:
                     temp = String.format("║ LV  %4d ║", pLv);
@@ -638,13 +658,13 @@ public class GameActivity extends AppCompatActivity {
                     temp = String.format("║ Keys     ║");
                     break;
                 case 9:
-                    temp = String.format("║ ░    %3d ║", pKeys[0]);
+                    temp = String.format("║ ░ key%3d ║", pKeys[0]);
                     break;
                 case 10:
-                    temp = String.format("║ ▒    %3d ║", pKeys[1]);
+                    temp = String.format("║ ▒ key%3d ║", pKeys[1]);
                     break;
                 case 11:
-                    temp = String.format("║ ▓    %3d ║", pKeys[2]);
+                    temp = String.format("║ ▓ key%3d ║", pKeys[2]);
                     break;
                 case 12:
                     temp = String.format("╩══════════╝");
