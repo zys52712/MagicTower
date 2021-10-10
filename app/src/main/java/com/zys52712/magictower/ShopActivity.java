@@ -77,7 +77,7 @@ public class ShopActivity extends AppCompatActivity {
                 int finalAtkdmg = atkdmg;
                 offer2.setOnClickListener(new View.OnClickListener() {
                     public void onClick(View v) {
-                        if (GameActivity.pGold > finalCost) {
+                        if (GameActivity.pGold >= finalCost) {
                             GameActivity.pGold -= finalCost;
                             GameActivity.pAtk += finalAtkdmg;
                             String infoMsg = String.format("Attack increased to %d (%d+%d)", GameActivity.pAtk, GameActivity.pAtk - finalAtkdmg, finalAtkdmg);
@@ -92,7 +92,7 @@ public class ShopActivity extends AppCompatActivity {
 
                 offer3.setOnClickListener(new View.OnClickListener() {
                     public void onClick(View v) {
-                        if (GameActivity.pGold > finalCost) {
+                        if (GameActivity.pGold >= finalCost) {
                             GameActivity.pGold -= finalCost;
                             GameActivity.pDef += finalAtkdmg;
                             String infoMsg = String.format("Defense increased to %d (%d+%d)", GameActivity.pDef, GameActivity.pDef - finalAtkdmg, finalAtkdmg);
@@ -161,7 +161,7 @@ public class ShopActivity extends AppCompatActivity {
 
                 offer2.setOnClickListener(new View.OnClickListener() {
                     public void onClick(View v) {
-                        if (GameActivity.pEXP > finalLvCost) {
+                        if (GameActivity.pEXP >= finalCost2) {
                             GameActivity.pEXP -= finalCost2;
                             GameActivity.pAtk += finalatkdmg2;
                             String infoMsg = String.format("Attack increased to %d (%d+%d)", GameActivity.pAtk, GameActivity.pAtk - finalatkdmg2, finalatkdmg2);
@@ -176,7 +176,7 @@ public class ShopActivity extends AppCompatActivity {
 
                 offer3.setOnClickListener(new View.OnClickListener() {
                     public void onClick(View v) {
-                        if (GameActivity.pEXP > finalLvCost) {
+                        if (GameActivity.pEXP >= finalCost2) {
                             GameActivity.pEXP -= finalCost2;
                             GameActivity.pDef += finalatkdmg2;
                             String infoMsg = String.format("Defense increased to %d (%d+%d)", GameActivity.pDef, GameActivity.pDef - finalatkdmg2, finalatkdmg2);
