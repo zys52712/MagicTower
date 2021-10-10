@@ -52,8 +52,8 @@ public class FightActivity extends AppCompatActivity {
         pAtk = GameActivity.pAtk;
         pDef = GameActivity.pDef;
 
-        String pStat = pHealth + "\n\n" + pAtk + "\n\n" + pDef + "\n\n" + negativeToZero(pAtk - mobDef);
-        String mStat = mobHealth + "\n\n" + mobAtk + "\n\n" + mobDef + "\n\n" + negativeToZero(mobAtk - pDef);
+        String pStat = pHealth + "\n" + pAtk + "\n" + pDef + "\n" + negativeToZero(pAtk - mobDef);
+        String mStat = mobHealth + "\n" + mobAtk + "\n" + mobDef + "\n" + negativeToZero(mobAtk - pDef);
         updateTextView(pStat,mStat);
     }
 
@@ -75,8 +75,8 @@ public class FightActivity extends AppCompatActivity {
                 long current = currentTimeMillis();
 
                 while (mobHealth > 0) {
-                    String pStat = pHealth + "\n\n" + pAtk + "\n\n" + pDef + "\n\n" + negativeToZero(pAtk - mobDef);
-                    String mStat = mobHealth + "\n\n" + mobAtk + "\n\n" + mobDef + "\n\n" + negativeToZero(mobAtk - pDef);
+                    String pStat = pHealth + "\n" + pAtk + "\n" + pDef + "\n" + negativeToZero(pAtk - mobDef);
+                    String mStat = mobHealth + "\n" + mobAtk + "\n" + mobDef + "\n" + negativeToZero(mobAtk - pDef);
                     updateTextView(pStat, mStat);
 
                     mobHealth -= negativeToZero(pAtk - mobDef);
@@ -96,8 +96,6 @@ public class FightActivity extends AppCompatActivity {
 
                     pause(0.5);
                 }
-
-                String endText = String.format("You defeated %s, %d gold and %d exp gained", mobName, mobGold, mobEXP);
 
                 GameActivity.pHealth = pHealth;
                 GameActivity.pAtk = pAtk;

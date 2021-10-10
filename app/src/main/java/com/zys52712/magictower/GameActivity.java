@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.AssetManager;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -329,7 +330,7 @@ public class GameActivity extends AppCompatActivity {
 
                 fight(levels[currentLv][pY][pX]);
 
-                String endText = String.format("You defeated *%s*\n %d gold and %d exp gained", mobName, mobGold, mobEXP);
+                String endText = String.format("You defeated * %s *\n %d gold and %d exp gained", mobName, mobGold, mobEXP);
                 message.setText(endText);
                 replaceAndReturn();
                 printField();
@@ -631,43 +632,43 @@ public class GameActivity extends AppCompatActivity {
 
             switch (i) {
                 case 0:
-                    temp = String.format("╦══════════╗");
+                    temp = String.format("══════════╗");
                     break;
                 case 1:
-                    temp = String.format("║ Floor %2d ║", currentLv);
+                    temp = String.format(" Floor %2d ║", currentLv);
                     break;
                 case 2:
-                    temp = String.format("║ LV  %4d ║", pLv);
+                    temp = String.format(" LV  %4d ║", pLv);
                     break;
                 case 3:
-                    temp = String.format("║ HP %5d ║", pHealth);
+                    temp = String.format(" HP %5d ║", pHealth);
                     break;
                 case 4:
-                    temp = String.format("║ ATK %4d ║", pAtk);
+                    temp = String.format(" ATK %4d ║", pAtk);
                     break;
                 case 5:
-                    temp = String.format("║ DEF %4d ║", pDef);
+                    temp = String.format(" DEF %4d ║", pDef);
                     break;
                 case 6:
-                    temp = String.format("║ GOLD%4d ║", pGold);
+                    temp = String.format(" GOLD%4d ║", pGold);
                     break;
                 case 7:
-                    temp = String.format("║ EXP %4d ║", pEXP);
+                    temp = String.format(" EXP %4d ║", pEXP);
                     break;
                 case 8:
-                    temp = String.format("║ Keys     ║");
+                    temp = String.format(" Keys     ║");
                     break;
                 case 9:
-                    temp = String.format("║ ░ key%3d ║", pKeys[0]);
+                    temp = String.format(" ░ key%3d ║", pKeys[0]);
                     break;
                 case 10:
-                    temp = String.format("║ ▒ key%3d ║", pKeys[1]);
+                    temp = String.format(" ▒ key%3d ║", pKeys[1]);
                     break;
                 case 11:
-                    temp = String.format("║ ▓ key%3d ║", pKeys[2]);
+                    temp = String.format(" ▓ key%3d ║", pKeys[2]);
                     break;
                 case 12:
-                    temp = String.format("╩══════════╝");
+                    temp = String.format("══════════╝");
                     break;
                 default:
                     temp = String.format("");
