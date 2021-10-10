@@ -66,7 +66,7 @@ public class ShopActivity extends AppCompatActivity {
                             GameActivity.pHealth += finalHp;
                             String infoMsg = String.format("Health increased to %d (%d+%d)", GameActivity.pHealth, GameActivity.pHealth - finalHp, finalHp);
                             info.setText(infoMsg);
-                            String shopHeader = String.format("Welcome to the gold shop\n (%dG per upgrade, you have %dG)", finalCost, GameActivity.pGold);
+                            String shopHeader = String.format("Welcome to the gold shop!\n (%dG per upgrade, you have %dG)", finalCost, GameActivity.pGold);
                             shopTitle.setText(shopHeader);
                         } else {
                             info.setText("Sorry, you don't have enough gold");
@@ -82,7 +82,7 @@ public class ShopActivity extends AppCompatActivity {
                             GameActivity.pAtk += finalAtkdmg;
                             String infoMsg = String.format("Attack increased to %d (%d+%d)", GameActivity.pAtk, GameActivity.pAtk - finalAtkdmg, finalAtkdmg);
                             info.setText(infoMsg);
-                            String shopHeader = String.format("Welcome to the upgrades shop\n (%dG per upgrade, you have %dG)", finalCost, GameActivity.pGold);
+                            String shopHeader = String.format("Welcome to the gold shop!\n (%dG per upgrade, you have %dG)", finalCost, GameActivity.pGold);
                             shopTitle.setText(shopHeader);
                         } else {
                             info.setText("Sorry, you don't have enough gold");
@@ -97,7 +97,7 @@ public class ShopActivity extends AppCompatActivity {
                             GameActivity.pDef += finalAtkdmg;
                             String infoMsg = String.format("Defense increased to %d (%d+%d)", GameActivity.pDef, GameActivity.pDef - finalAtkdmg, finalAtkdmg);
                             info.setText(infoMsg);
-                            String shopHeader = String.format("Welcome to the upgrades shop\n (%dG per upgrade, you have %dG)", finalCost, GameActivity.pGold);
+                            String shopHeader = String.format("Welcome to the gold shop!\n (%dG per upgrade, you have %dG)", finalCost, GameActivity.pGold);
                             shopTitle.setText(shopHeader);
                         } else {
                             info.setText("Sorry, you don't have enough gold");
@@ -151,7 +151,7 @@ public class ShopActivity extends AppCompatActivity {
                             GameActivity.pLv++;
                             String infoMsg = String.format("Leveled up! Stats increased!");
                             info.setText(infoMsg);
-                            String shopHeader = String.format("Welcome to the exp shop\n (prices vary, you have %dEXP)", GameActivity.pEXP);
+                            String shopHeader = String.format("Welcome to the exp shop!\n (Prices vary, you have %dEXP)", GameActivity.pEXP);
                             shopTitle.setText(shopHeader);
                         } else {
                             info.setText("Sorry, you don't have enough gold");
@@ -166,7 +166,7 @@ public class ShopActivity extends AppCompatActivity {
                             GameActivity.pAtk += finalatkdmg2;
                             String infoMsg = String.format("Attack increased to %d (%d+%d)", GameActivity.pAtk, GameActivity.pAtk - finalatkdmg2, finalatkdmg2);
                             info.setText(infoMsg);
-                            String shopHeader = String.format("Welcome to the exp shop\n (prices vary, you have %dEXP)", GameActivity.pEXP);
+                            String shopHeader = String.format("Welcome to the exp shop!\n (Prices vary, you have %dEXP)", GameActivity.pEXP);
                             shopTitle.setText(shopHeader);
                         } else {
                             info.setText("Sorry, you don't have enough exp");
@@ -181,7 +181,7 @@ public class ShopActivity extends AppCompatActivity {
                             GameActivity.pDef += finalatkdmg2;
                             String infoMsg = String.format("Defense increased to %d (%d+%d)", GameActivity.pDef, GameActivity.pDef - finalatkdmg2, finalatkdmg2);
                             info.setText(infoMsg);
-                            String shopHeader = String.format("Welcome to the exp shop\n (prices vary, you have %dEXP)", GameActivity.pEXP);
+                            String shopHeader = String.format("Welcome to the exp shop!\n (Prices vary, you have %dEXP)", GameActivity.pEXP);
                             shopTitle.setText(shopHeader);
                         } else {
                             info.setText("Sorry, you don't have enough exp");
@@ -196,7 +196,7 @@ public class ShopActivity extends AppCompatActivity {
                 });
                 break;
             case '¥':
-                shopHeader = String.format("Welcome to the keys Shop\n (Prices vary, you have %dG)", GameActivity.pGold);
+                shopHeader = String.format("Welcome to the keys shop!\n (Prices vary, you have %dG)", GameActivity.pGold);
                 shopTitle.setText(shopHeader);
                 offer[1] = String.format("░ key (10G)");
                 offer[2] = String.format("▒ key (50G)");
@@ -213,9 +213,9 @@ public class ShopActivity extends AppCompatActivity {
                         if (GameActivity.pGold >= 10) {
                             GameActivity.pGold -= 10;
                             GameActivity.pKeys[0]++;
-                            String infoMsg = String.format("░ key increased to %d", GameActivity.pKeys[2]);
+                            String infoMsg = String.format("░ key increased to %d", GameActivity.pKeys[0]);
                             info.setText(infoMsg);
-                            String shopHeader = String.format("Welcome to the keys Shop\n (Prices vary, you have %dG)", GameActivity.pGold);
+                            String shopHeader = String.format("Welcome to the keys shop!\n (Prices vary, you have %dG)", GameActivity.pGold);
                             shopTitle.setText(shopHeader);
                         } else {
                             info.setText("Sorry, you don't have enough gold");
@@ -230,7 +230,7 @@ public class ShopActivity extends AppCompatActivity {
                             GameActivity.pKeys[1]++;
                             String infoMsg = String.format("▒ key increased to %d", GameActivity.pKeys[1]);
                             info.setText(infoMsg);
-                            String shopHeader = String.format("Welcome to the keys Shop\n (Prices vary, you have %dG)", GameActivity.pGold);
+                            String shopHeader = String.format("Welcome to the keys shop!\n (Prices vary, you have %dG)", GameActivity.pGold);
                             shopTitle.setText(shopHeader);
                         } else {
                             info.setText("Sorry, you don't have enough gold");
@@ -243,7 +243,7 @@ public class ShopActivity extends AppCompatActivity {
                         if (GameActivity.pGold >= 100) {
                             GameActivity.pGold -= 100;
                             GameActivity.pKeys[2]++;
-                            String infoMsg = String.format("▓ key increased to %d", GameActivity.pKeys[0]);
+                            String infoMsg = String.format("▓ key increased to %d", GameActivity.pKeys[2]);
                             info.setText(infoMsg);
                             String shopHeader = String.format("Welcome to the keys Shop\n (Prices vary, you have %dG)", GameActivity.pGold);
                             shopTitle.setText(shopHeader);

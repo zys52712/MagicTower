@@ -46,7 +46,7 @@ public class FightActivity extends AppCompatActivity {
         mobEXP = GameActivity.mobStats(mob, 4);
 
         title.append(mobName);
-        mobID.setText(mobName);
+        //mobID.setText(mobName);
 
         pHealth = GameActivity.pHealth;
         pAtk = GameActivity.pAtk;

@@ -211,6 +211,11 @@ public class GameActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void totem(View view) {
+        Intent intent = new Intent(this, TotemActivity.class);
+        startActivity(intent);
+    }
+
     public void game() {
         Scanner sc = new Scanner(System.in);
         String[] commands = new String[5];
@@ -538,7 +543,7 @@ public class GameActivity extends AppCompatActivity {
 
     // mob related
     public static void useTotem() {
-        System.out.format("%-2s%-3s%-20s%-6s%-6s%-6s%-6s%-6sEstimated Damage\n", " ", " ", "Mob Name", "HP", "Atk.",
+        String totemTitle = String.format("%-2s%-3s%-20s%-6s%-6s%-6s%-6s%-6sEstimated Damage\n", " ", " ", "Mob Name", "HP", "Atk.",
                 "Def.", "Gold", "EXP");
         for (int i = 0; i < mobLetter.length; i++) {
             if (checkFieldForChar(mobLetter[i])) {
@@ -548,19 +553,20 @@ public class GameActivity extends AppCompatActivity {
     }
 
     public static void totemPrinter(char mob) {
+        String line = "";
         if (pAtk - mobStats(mob, 2) > 0) {
             int mobDmg = negativeToZero(mobStats(mob, 0) / (pAtk - mobStats(mob, 2)) * ((mobStats(mob, 1) - pDef)));
             if (mob == 'K') {
-                System.out.format("%-2s%-3s%-20s%-6d%-6d%-6d%-6d%-6d%-6d\n", mob, letterToBoard(mob),
+                line = String.format("%-2s%-3s%-20s%-6d%-6d%-6d%-6d%-6d%-6d\n", mob, letterToBoard(mob),
                         charToMobName(mob), mobStats(mob, 0), mobStats(mob, 1), mobStats(mob, 2), mobStats(mob, 3),
                         mobStats(mob, 4), pHealth / 4 + mobDmg);
             } else {
-                System.out.format("%-2s%-3s%-20s%-6d%-6d%-6d%-6d%-6d%-6d\n", mob, letterToBoard(mob),
+                line = String.format("%-2s%-3s%-20s%-6d%-6d%-6d%-6d%-6d%-6d\n", mob, letterToBoard(mob),
                         charToMobName(mob), mobStats(mob, 0), mobStats(mob, 1), mobStats(mob, 2), mobStats(mob, 3),
                         mobStats(mob, 4), mobDmg);
             }
         } else {
-            System.out.format("%-2s%-3s%-20s%-6d%-6d%-6d%-6d%-6dUnbeatable\n", mob, letterToBoard(mob),
+            line = String.format("%-2s%-3s%-20s%-6d%-6d%-6d%-6d%-6dUnbeatable\n", mob, letterToBoard(mob),
                     charToMobName(mob), mobStats(mob, 0), mobStats(mob, 1), mobStats(mob, 2), mobStats(mob, 3),
                     mobStats(mob, 4));
         }
