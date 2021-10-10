@@ -47,9 +47,9 @@ public class ShopActivity extends AppCompatActivity {
                 shopHeader = String.format("Welcome to the gold shop\n (%dG per upgrade, you have %dG)", cost, GameActivity.pGold);
                 shopTitle.setText(shopHeader);
                 //System.out.format("(1) %d health\n(2) %d attack\n(3) %d defense\n(4) exit shop\n", hp, atkdmg, atkdmg);
-                offer[1] = String.format("+%d health", hp);
-                offer[2] = String.format("+%d attack", atkdmg);
-                offer[3] = String.format("+%d defense", atkdmg);
+                offer[1] = String.format("(+%d) health", hp);
+                offer[2] = String.format("(+%d) attack", atkdmg);
+                offer[3] = String.format("(+%d) defense", atkdmg);
                 offer[4] = String.format("exit shop");
 
                 offer1.setText(offer[1]);
@@ -127,9 +127,9 @@ public class ShopActivity extends AppCompatActivity {
                 shopHeader = String.format("Welcome to the exp shop\n (prices vary, you have %dEXP)", GameActivity.pEXP);
                 shopTitle.setText(shopHeader);
                 //System.out.format("(1) %d health\n(2) %d attack\n(3) %d defense\n(4) exit shop\n", hp, atkdmg, atkdmg);
-                offer[1] = String.format("level up x%d (%dEXP)", lv, lvCost);
-                offer[2] = String.format("+%d attack  (%dEXP)", atkdmg2, cost2);
-                offer[3] = String.format("+%d defense  (%dEXP)", atkdmg2, cost2);
+                offer[1] = String.format("(x%d) level up (%dEXP)", lv, lvCost);
+                offer[2] = String.format("(+%d) attack  (%dEXP)", atkdmg2, cost2);
+                offer[3] = String.format("(+%d) defense  (%dEXP)", atkdmg2, cost2);
                 offer[4] = String.format("exit shop");
 
                 offer1.setText(offer[1]);

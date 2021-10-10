@@ -13,7 +13,7 @@
             android:name=".DebugActivity"
             android:exported="true"
             android:label="Debug Input"
-            android:theme="@style/Theme.AppCompat.DayNight.Dialog.Alert">
+            android:theme="@style/Theme.MagicTowerDialog">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".GameActivity" />
@@ -22,7 +22,7 @@
             android:name=".TeleportActivity"
             android:exported="true"
             android:label="Teleporter"
-            android:theme="@style/Theme.AppCompat.DayNight.Dialog.Alert">
+            android:theme="@style/Theme.MagicTowerDialog">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".GameActivity" />
@@ -31,7 +31,7 @@
             android:name=".TotemActivity"
             android:exported="true"
             android:label="Totem"
-            android:theme="@style/Theme.AppCompat.DayNight.Dialog.Alert">
+            android:theme="@style/Theme.MagicTowerDialog">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".GameActivity" />
@@ -40,7 +40,7 @@
             android:name=".ShopActivity"
             android:exported="true"
             android:label="Shop"
-            android:theme="@style/Theme.AppCompat.DayNight.Dialog.Alert">
+            android:theme="@style/Theme.MagicTowerDialog">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".GameActivity" />
@@ -49,7 +49,7 @@
             android:name=".FightActivity"
             android:exported="true"
             android:label="Mob Encounter"
-            android:theme="@style/Theme.AppCompat.DayNight.Dialog.Alert">
+            android:theme="@style/Theme.MagicTowerDialog">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".GameActivity" />

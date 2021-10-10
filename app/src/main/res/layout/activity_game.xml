@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/activity_gradient"
+    android:background="@drawable/background_gradient"
     tools:context=".GameActivity">
 
     <TextView
@@ -16,7 +16,7 @@
         android:scrollbars="none"
         android:textAlignment="viewStart"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textColor="?android:attr/textColorPrimaryInverse"
+        android:textColor="?android:attr/textColorPrimary"
         android:textSize="16sp"
         android:typeface="monospace"
         app:layout_constraintEnd_toEndOf="parent"
@@ -37,6 +37,8 @@
         android:layout_height="60dp"
         android:layout_marginStart="68dp"
         android:layout_marginBottom="32dp"
+        android:backgroundTint="?attr/colorPrimary"
+        android:tint="?android:attr/textColorPrimaryInverse"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline2"
         app:srcCompat="@drawable/ic_baseline_keyboard_arrow_down_24" />
@@ -47,6 +49,8 @@
         android:layout_height="60dp"
         android:layout_marginStart="4dp"
         android:layout_marginBottom="4dp"
+        android:backgroundTint="?attr/colorPrimary"
+        android:tint="?android:attr/textColorPrimaryInverse"
         app:layout_constraintBottom_toTopOf="@+id/button_left"
         app:layout_constraintStart_toEndOf="@+id/button_left"
         app:srcCompat="@drawable/ic_baseline_keyboard_arrow_up_24" />
@@ -57,6 +61,8 @@
         android:layout_height="60dp"
         android:layout_marginStart="4dp"
         android:layout_marginBottom="4dp"
+        android:backgroundTint="?attr/colorPrimary"
+        android:tint="?android:attr/textColorPrimaryInverse"
         app:layout_constraintBottom_toTopOf="@+id/button_down"
         app:layout_constraintStart_toEndOf="@+id/button_down"
         app:srcCompat="@drawable/ic_baseline_keyboard_arrow_right_24" />
@@ -67,6 +73,8 @@
         android:layout_height="60dp"
         android:layout_marginEnd="4dp"
         android:layout_marginBottom="4dp"
+        android:backgroundTint="?attr/colorPrimary"
+        android:tint="?android:attr/textColorPrimaryInverse"
         app:layout_constraintBottom_toTopOf="@+id/button_down"
         app:layout_constraintEnd_toStartOf="@+id/button_down"
         app:srcCompat="@drawable/ic_baseline_keyboard_arrow_left_24" />
@@ -77,7 +85,7 @@
         android:layout_height="wrap_content"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textColor="?android:attr/textColorPrimaryInverse"
+        android:textColor="?android:attr/textColorPrimary"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"

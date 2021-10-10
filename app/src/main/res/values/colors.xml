@@ -6,8 +6,14 @@
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
+    <color name="action_dark">#FF121212</color>
+    <color name="really_dark_teal">#FF003B37</color>
+    <color name="really_light_teal">#FFCAF6F1</color>
     <color name="white">#FFFFFFFF</color>
     <color name="Teal_Main">#4db6ac</color>
     <color name="Teal_Light">#82e9de</color>
     <color name="Teal_Dark">#00867d</color>
+    <color name="Green_Main">#82c600</color>
+    <color name="Green_Light">#b6f94b</color>
+    <color name="Green_Dark">#4e9500</color>
 </resources>
