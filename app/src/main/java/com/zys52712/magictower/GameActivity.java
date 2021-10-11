@@ -66,7 +66,7 @@ public class GameActivity extends AppCompatActivity {
             { 9, 11 }, { 6, 11 }, { 1, 2 }, { 7, 4 }, { 5, 7 }, // lv5 to lv9
             { 2, 11 }, { 10, 11 }, { 2, 11 }, { 6, 10 }, { 4, 1 }, // lv10 to lv14
             { 6, 1 } }; // lv15 to lv19
-    static int[][] downDefaultPos = { { 0, 0 }, { 6, 1 }, { 2, 1 }, { 1, 10 }, { 11, 10 }, // lv0 to lv4
+    static int[][] downDefaultPos = { { 0, 0 }, { 6, 2 }, { 2, 1 }, { 1, 10 }, { 11, 10 }, // lv0 to lv4
             { 1, 10 }, { 10, 10 }, { 6, 11 }, { 2, 1 }, { 8, 5 }, // lv5 to lv9
             { 7, 8 }, { 1, 10 }, { 10, 11 }, { 2, 11 }, { 5, 11 }, // lv10 to lv14
             { 6, 1 }, { 8, 1 } }; // lv15 to lv19
