@@ -2,32 +2,29 @@ package com.zys52712.magictower;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.AssetManager;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.ref.WeakReference;
 import java.util.Random;
-import java.util.Scanner;
 
 public class GameActivity extends AppCompatActivity {
     public static WeakReference<TextView> viewWeakReference;
 
     public static final String EXTRA_MID = "";
     public static final String EXTRA_TYPE = "";
-    public static String endText;
     static char[][][] levels = new char[22][13][14];
-    static String tempLine = new String();
+    static String tempLine;
     static int oldPx = 0;
     static int oldPy = 0;
     static boolean firstRun = true;
@@ -71,10 +68,9 @@ public class GameActivity extends AppCompatActivity {
             { 6, 1 } }; // lv15 to lv19
     static int[][] downDefaultPos = { { 0, 0 }, { 6, 1 }, { 2, 1 }, { 1, 10 }, { 11, 10 }, // lv0 to lv4
             { 1, 10 }, { 10, 10 }, { 6, 11 }, { 2, 1 }, { 8, 5 }, // lv5 to lv9
-            { 7, 4 }, { 1, 10 }, { 10, 11 }, { 2, 11 }, { 5, 11 }, // lv10 to lv14
+            { 7, 8 }, { 1, 10 }, { 10, 11 }, { 2, 11 }, { 5, 11 }, // lv10 to lv14
             { 6, 1 }, { 8, 1 } }; // lv15 to lv19
     static Random random = new Random();
-    private static TextView message;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,7 +79,6 @@ public class GameActivity extends AppCompatActivity {
 
         Context context = getApplicationContext();
         TextView gameWindow = findViewById(R.id.gameWindow);
-        //gameWindow.setMovementMethod(new ScrollingMovementMethod());
         gameWindow.setSingleLine(false);
         InputStream levelTxt = null;
 
@@ -142,6 +137,7 @@ public class GameActivity extends AppCompatActivity {
         printField();
     }
 
+    @SuppressLint("NonConstantResourceId")
     public void moveOnClick(View v) {
         TextView message = findViewById(R.id.msgBox);
         message.setText("");
@@ -201,72 +197,10 @@ public class GameActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void game() {
-        Scanner sc = new Scanner(System.in);
-        String[] commands = new String[5];
-
-        // System.out.println("game started, please enter command");
-
-        while (true) {
-            System.out.println("");
-            levels[currentLv][pY][pX] = 'P';
-            printField();
-            System.out.println("\nplease enter command");
-            commands = sc.nextLine().split(" ");
-            switch (commands[0]) {
-                case "w":
-                case "a":
-                case "s":
-                case "d":
-                    movePC(commands[0].charAt(0));
-                    break;
-                case "t":
-                    if (hasTotem) {
-                        useTotem();
-                    } else {
-                        System.out.println("You do not have the Totem");
-                    }
-                    break;
-                case "tp":
-                    if (hasTeleport) {
-                        useTeleporter(Integer.parseInt(commands[1]));
-                    } else {
-                        System.out.println("You do not have the Teleporter");
-                    }
-                    break;
-                case "debug":
-                    switch (commands[1]) {
-                        case "hp":
-                            pHealth += Integer.parseInt(commands[2]);
-                            break;
-                        case "atk":
-                            pAtk += Integer.parseInt(commands[2]);
-                            break;
-                        case "def":
-                            pDef += Integer.parseInt(commands[2]);
-                            break;
-                        case "gold":
-                            pGold += Integer.parseInt(commands[2]);
-                            break;
-                        case "exp":
-                            pEXP += Integer.parseInt(commands[2]);
-                            break;
-                        case "key":
-                            pKeys[0] += Integer.parseInt(commands[2]);
-                            pKeys[1] += Integer.parseInt(commands[2]);
-                            pKeys[2] += Integer.parseInt(commands[2]);
-                            break;
-                    }
-                    break;
-                default:
-                    System.out.println("unknown command, please enter another one");
-                    break;
-            }
-        }
-    }
-
+    @SuppressLint({"DefaultLocale", "SetTextI18n"})
     public void movePC(char direction) {
         TextView message = findViewById(R.id.msgBox);
+        String msg;
 
         oldPx = pX;
         oldPy = pY;
@@ -285,7 +219,7 @@ public class GameActivity extends AppCompatActivity {
                 pX++;
                 break;
         }
-        // block dependent
+
         switch (levels[currentLv][pY][pX]) {
             case '█':
             case '*':
@@ -339,13 +273,13 @@ public class GameActivity extends AppCompatActivity {
                 switch (currentLv) {
                     case 1:
                         hasTotem = true;
-                        System.out.format(
-                                "You have gained the totem! Allows you to see stats for the mobs on the board, \nas well as dammage taken if fought (type 't' to use)\n");
+                        msg = "You have gained the totem!\nAllows you to see stats for the mobs on the board";
+                        message.setText(msg);
                         break;
                     case 9:
                         hasTeleport = true;
-                        System.out.format(
-                                "You have gained the teleporter! Allows you to jump between levels. (type 'tp #' to use)\n");
+                        msg = "You have gained the teleporter!\nAllows you to jump between levels.\n";
+                        message.setText(msg);
                         break;
                 }
                 replaceAndReturn();
@@ -353,14 +287,14 @@ public class GameActivity extends AppCompatActivity {
             case 'û':
                 switch (currentLv) {
                     case 6:
-                        System.out.print("You leveled up!");
+                        message.setText("You leveled up!");
                         pHealth += 1000;
                         pAtk += 7;
                         pDef += 7;
                         pLv++;
                         break;
                     case 13:
-                        System.out.print("You leveled up (x3)!");
+                        message.setText("You leveled up (x3)!");
                         pHealth += 3000;
                         pAtk += 21;
                         pDef += 21;
@@ -377,37 +311,37 @@ public class GameActivity extends AppCompatActivity {
                 pY = oldPy;
                 break;
             case '1':
-                message.setText("You have gained a bottle, health increased by 200!");
+                message.setText("You gained a small health potion,\nhealth increased by 200!");
                 pHealth += 200;
                 replaceAndReturn();
                 break;
             case '2':
-                message.setText("You have gained a bottle, health increased by 500!");
+                message.setText("You gained a large health potion,\nhealth increased by 500!");
                 pHealth += 500;
                 replaceAndReturn();
                 break;
             case '3':
-                message.setText("You have gained blue gem, defense increased by 3!");
+                message.setText("You gained blue gem, defense increased by 3!");
                 pDef += 3;
                 replaceAndReturn();
                 break;
             case '4':
-                message.setText("You have gained red gem, attack increased by 3!");
+                message.setText("You gained red gem, attack increased by 3!");
                 pAtk += 3;
                 replaceAndReturn();
                 break;
             case '5':
-                message.setText("You gained a yellow key");
+                message.setText("You gained a ░ key");
                 pKeys[0]++;
                 replaceAndReturn();
                 break;
             case '6':
-                message.setText("You gained a blue key");
+                message.setText("You gained a ▒ key");
                 pKeys[1]++;
                 replaceAndReturn();
                 break;
             case '7':
-                message.setText("You gained a red key");
+                message.setText("You gained a ▓ key");
                 pKeys[2]++;
                 replaceAndReturn();
                 break;
@@ -510,6 +444,7 @@ public class GameActivity extends AppCompatActivity {
         pY = oldPy;
     }
 
+    @SuppressLint("SetTextI18n, DefaultLocale")
     public static void useTeleporter(int level) {
         if (level < 0 || level > levelCount) {
             viewWeakReference.get().setText("Input out of bounds, please try again");
@@ -523,40 +458,8 @@ public class GameActivity extends AppCompatActivity {
                 pX = upDefaultPos[currentLv - 1][0];
                 pY = upDefaultPos[currentLv - 1][1];
             }
-            levels[currentLv][pY][pX] = 'P';
-            String temp = String.format("Teleported to floor %d", currentLv);
+            levels[currentLv][pY][pX] = 'P';String temp = String.format("Teleported to floor %d", currentLv);
             viewWeakReference.get().setText(temp);
-        }
-    }
-
-    // mob related
-    public static void useTotem() {
-        String totemTitle = String.format("%-2s%-3s%-20s%-6s%-6s%-6s%-6s%-6sEstimated Damage\n", " ", " ", "Mob Name", "HP", "Atk.",
-                "Def.", "Gold", "EXP");
-        for (int i = 0; i < mobLetter.length; i++) {
-            if (checkFieldForChar(mobLetter[i])) {
-                totemPrinter(mobLetter[i]);
-            }
-        }
-    }
-
-    public static void totemPrinter(char mob) {
-        String line = "";
-        if (pAtk - mobStats(mob, 2) > 0) {
-            int mobDmg = negativeToZero(mobStats(mob, 0) / (pAtk - mobStats(mob, 2)) * ((mobStats(mob, 1) - pDef)));
-            if (mob == 'K') {
-                line = String.format("%-2s%-3s%-20s%-6d%-6d%-6d%-6d%-6d%-6d\n", mob, letterToBoard(mob),
-                        charToMobName(mob), mobStats(mob, 0), mobStats(mob, 1), mobStats(mob, 2), mobStats(mob, 3),
-                        mobStats(mob, 4), pHealth / 4 + mobDmg);
-            } else {
-                line = String.format("%-2s%-3s%-20s%-6d%-6d%-6d%-6d%-6d%-6d\n", mob, letterToBoard(mob),
-                        charToMobName(mob), mobStats(mob, 0), mobStats(mob, 1), mobStats(mob, 2), mobStats(mob, 3),
-                        mobStats(mob, 4), mobDmg);
-            }
-        } else {
-            line = String.format("%-2s%-3s%-20s%-6d%-6d%-6d%-6d%-6dUnbeatable\n", mob, letterToBoard(mob),
-                    charToMobName(mob), mobStats(mob, 0), mobStats(mob, 1), mobStats(mob, 2), mobStats(mob, 3),
-                    mobStats(mob, 4));
         }
     }
 
@@ -579,14 +482,11 @@ public class GameActivity extends AppCompatActivity {
         return mobName[new String(mobLetter).indexOf(mob)];
     }
 
-    public static int negativeToZero(int num) {
-        return Math.max(0, num);
-    }
-
     public static void showguide() {
         System.out.println("GUIDE GOES HERE");
     }
 
+    @SuppressLint("DefaultLocale")
     public void printField() {
         TextView gameWindow = findViewById(R.id.gameWindow);
         TextView test = findViewById(R.id.testView);
@@ -594,45 +494,15 @@ public class GameActivity extends AppCompatActivity {
         gameWindow.setText("");
         test.setText("");
         for (int i = 0; i < 13; i++) {
-            String line = "";
-            String temp = "";
+            StringBuilder line = new StringBuilder();
+            String temp;
             for (int j = 0; j < 13; j++) {
-                line += letterToBoard(levels[currentLv][i][j]);
+                line.append(letterToBoard(levels[currentLv][i][j]));
             }
-
-            /*
-            switch (i) {
-                case 0:
-                    temp = String.format("╔══════════╦══════════╗");
-                    break;
-                case 1:
-                    temp = String.format("║ Stats    ║ Floor %2d ║", currentLv);
-                    break;
-                case 2:
-                    temp = String.format("║ LV  %4d ║ HP %5d ║", pLv, pHealth);
-                    break;
-                case 3:
-                    temp = String.format("║ ATK %4d ║ DEF %4d ║", pAtk, pDef);
-                    break;
-                case 4:
-                    temp = String.format("║ GOLD%4d ║ EXP %4d ║", pGold, pEXP);
-                    break;
-                case 5:
-                    temp = String.format("║ Keys     ║ ░    %3d ║", pKeys[0]);
-                    break;
-                case 6:
-                    temp = String.format("║ ▒    %3d ║ ▓    %3d ║", pKeys[1], pKeys[2]);
-                    break;
-                case 7:
-                    temp = String.format("╚══════════╩══════════╝");
-                    break;
-            }
-            test.append(temp + "\n");
-             */
 
             switch (i) {
                 case 0:
-                    temp = String.format("══════════╗");
+                    temp = "══════════╗";
                     break;
                 case 1:
                     temp = String.format(" Floor %2d ║", currentLv);
@@ -656,7 +526,7 @@ public class GameActivity extends AppCompatActivity {
                     temp = String.format(" EXP %4d ║", pEXP);
                     break;
                 case 8:
-                    temp = String.format(" Keys     ║");
+                    temp = " Keys     ║";
                     break;
                 case 9:
                     temp = String.format(" ░ key%3d ║", pKeys[0]);
@@ -668,13 +538,13 @@ public class GameActivity extends AppCompatActivity {
                     temp = String.format(" ▓ key%3d ║", pKeys[2]);
                     break;
                 case 12:
-                    temp = String.format("══════════╝");
+                    temp = "══════════╝";
                     break;
                 default:
-                    temp = String.format("");
+                    temp = "";
                     break;
             }
-            line += temp;
+            line.append(temp);
             gameWindow.append(line + "\n");
         }
     }
@@ -794,7 +664,7 @@ public class GameActivity extends AppCompatActivity {
             case 'ä':
                 return "sh";
             default:
-                return String.format("*" + board);
+                return "*" + board;
         }
     }
 
@@ -802,7 +672,7 @@ public class GameActivity extends AppCompatActivity {
         try {
             Thread.sleep((long) (seconds * 1000));
         } catch (InterruptedException e) {
+            e.printStackTrace();
         }
     }
-
 }

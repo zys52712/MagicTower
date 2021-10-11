@@ -2,6 +2,7 @@ package com.zys52712.magictower;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.widget.HorizontalScrollView;
@@ -15,23 +16,21 @@ public class TotemActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_totem);
-
         useTotem();
     }
 
     public void useTotem() {
-        TextView title = findViewById(R.id.totemBody);
+        TextView body = findViewById(R.id.totemBody);
         //TextView body = findViewById(R.id.totemBody);
         TextView mobName = findViewById(R.id.mobNames);
         TextView mobStats = findViewById(R.id.mobStats);
 
-        title.setMovementMethod(new ScrollingMovementMethod());
-        title.setHorizontallyScrolling(true);
+        body.setMovementMethod(new ScrollingMovementMethod());
+        body.setHorizontallyScrolling(true);
         mobStats.setMovementMethod(new ScrollingMovementMethod());
         mobStats.setHorizontallyScrolling(true);
 
-        title.setText("");
-        //body.setText("");
+        body.setText("");
         mobStats.setText("");
 
         String totemTitle = String.format("%-2s%-3s%-20s%-6s%-5s%-5s%-7s%-10s", " ", " ", "Mob Name", "HP", "ATK",
@@ -39,20 +38,21 @@ public class TotemActivity extends AppCompatActivity {
         String totemMobNames = String.format("%-3s%-20s", " ", "Mob Name------------");
         String totemMobStats = String.format("%-6s%-5s%-5s%-7s%-10s", "HP", "ATK",
                 "DEF", "GD/EXP", "Est. Dmg");
-        title.setText(totemTitle);
-        title.append("\n\n");
+        body.setText(totemTitle);
+        body.append("\n\n");
         mobName.setText(totemMobNames);
         mobName.append("\n\n");
         mobStats.setText(totemMobStats);
         mobStats.append("\n\n");
 
-        for (int i = 0; i < GameActivity.mobLetter.length; i++) {
-            if (GameActivity.checkFieldForChar(GameActivity.mobLetter[i])) {
-                totemPrinter(GameActivity.mobLetter[i]);
+        for (char c : GameActivity.mobLetter) {
+            if (GameActivity.checkFieldForChar(c)) {
+                totemPrinter(c);
             }
         }
     }
 
+    @SuppressLint("DefaultLocale")
     public void totemPrinter(char mob) {
         TextView body = findViewById(R.id.totemBody);
         TextView mobStats = findViewById(R.id.mobStats);
@@ -86,7 +86,7 @@ public class TotemActivity extends AppCompatActivity {
 
         } else {
             line = String.format("%-2s%-3s%-20s%-6d%-5d%-5d%3d/%-3d%-10s\n", mob, boardName,
-                    mobName, health, atk, def, gold, exp, "Unbeatable");
+                    mobName, health, atk, def, gold, exp, "Death");
             totemStats = String.format("%-6d%-5d%-5d%-7s%-10s\n", health, atk, def, goldEXP, "Death");
 
         }
