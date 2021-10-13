@@ -65,14 +65,11 @@ public class FightActivity extends AppCompatActivity {
                 TextView pStats = findViewById(R.id.pStats);
                 TextView mStats = findViewById(R.id.mStats);
                 setFinishOnTouchOutside(false);
-
                 pause(0.2);
 
                 if (mob == 'K') {
                     pHealth -= pHealth / 4;
                 }
-
-                long current = currentTimeMillis();
 
                 while (mobHealth > 0) {
                     String pStat = pHealth + "\n" + pAtk + "\n" + pDef + "\n" + negativeToZero(pAtk - mobDef);
@@ -107,13 +104,6 @@ public class FightActivity extends AppCompatActivity {
         }).start();
     }
 
-    @Override
-    public void onBackPressed() {
-        // super.onBackPressed();
-        Toast.makeText(FightActivity.this,"There is no back action",Toast.LENGTH_LONG).show();
-        return;
-    }
-
     private void updateTextView(final String s1, final String s2) {
         FightActivity.this.runOnUiThread(new Runnable() {
             @Override
@@ -125,6 +115,13 @@ public class FightActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        // super.onBackPressed();
+        Toast.makeText(FightActivity.this,"You cannot go back from a fight",Toast.LENGTH_LONG).show();
+        return;
     }
 
     public static int negativeToZero(int num) {
